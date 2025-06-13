@@ -48,12 +48,19 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+4. *(Optional)* Download the Mistral 7B model checkpoint for local generation:
+
+```bash
+python scripts/download_model.py
+```
+
 ### Dependencies
 
 Planned dependencies include:
 
 - `mistral-client` (or an equivalent library) to communicate with the Mistral LLM.
 - Standard Python modules such as `json`, `argparse`, and `logging`.
+- `huggingface-hub` for downloading checkpoints from Hugging Face.
 
 A complete list will be added as implementation progresses.
 

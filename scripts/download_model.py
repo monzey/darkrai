@@ -4,8 +4,12 @@
 import argparse
 from pathlib import Path
 
-from huggingface_hub import snapshot_download
+from huggingface_hub import snapshot_download, login
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+login(os.getenv("HF_TOKEN"))
 
 def main() -> None:
     parser = argparse.ArgumentParser(

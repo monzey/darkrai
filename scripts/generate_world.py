@@ -4,6 +4,7 @@
 import argparse
 import json
 import sys
+from pathlib import Path
 
 
 def main() -> None:
@@ -15,6 +16,10 @@ def main() -> None:
     parser.add_argument("--checkpoint", help="Path to local checkpoint instead of using API")
 
     args = parser.parse_args()
+
+    # Allow running the script without installing the package
+    src_path = Path(__file__).resolve().parents[1] / "src"
+    sys.path.insert(0, str(src_path))
 
     from darkrai import MistralClient
     client = MistralClient(api_key=args.api_key, model=args.model, checkpoint=args.checkpoint)

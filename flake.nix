@@ -25,6 +25,8 @@
           shellHook = ''
             echo "🐍 Python JDR-IA environment ready!"
             export PYTHONPATH=$(pwd)
+            python -m venv .venv
+            source .venv/bin/activate
           '';
         };
       }

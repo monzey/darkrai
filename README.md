@@ -88,10 +88,10 @@ The model is expected to return a JSON string which will be parsed into a Python
 
 ## Running the Generator
 
-Implementation of the generator is forthcoming. Once available, you will be able to run a command like:
+You can now generate a world using `scripts/generate_world.py`:
 
 ```bash
-python -m darkrai.generate --output world.json
+python scripts/generate_world.py "<prompt>" --output world.json
 ```
 
 This will request world data from the Mistral LLM, then save the JSON output to `world.json`.

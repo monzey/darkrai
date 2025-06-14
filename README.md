@@ -47,8 +47,9 @@ source .venv/bin/activate
 ```bash
 pip install -e .
 ```
+4. Copy `.env.example` to `.env` and add your tokens.
 
-4. *(Optional)* Download the Mistral 7B model checkpoint for local generation:
+5. *(Optional)* Download the Mistral 7B model checkpoint for local generation:
 
 ```bash
 darkrai download --destination models/mistral-7b

@@ -2,7 +2,13 @@ import os
 import json
 from typing import Any, Dict, Optional
 
-import requests
+from urllib import request as urlrequest
+from urllib.error import HTTPError
+
+try:
+    import requests
+except Exception:  # pragma: no cover - requests is optional
+    requests = None
 
 try:
     from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -18,7 +24,7 @@ class MistralClient:
         self.api_key = api_key or os.getenv("MISTRAL_API_KEY")
         self.model = model
         self.checkpoint = checkpoint
-        self.session = requests.Session()
+        self.session = requests.Session() if requests else None
 
         if checkpoint:
             if AutoTokenizer is None or AutoModelForCausalLM is None:
@@ -37,10 +43,20 @@ class MistralClient:
             "messages": [{"role": "user", "content": prompt}],
         }
         payload.update(kwargs)
-        headers = {"Authorization": f"Bearer {self.api_key}"}
-        response = self.session.post(url, json=payload, headers=headers)
-        response.raise_for_status()
-        data = response.json()
+        headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
+
+        if self.session is not None:
+            response = self.session.post(url, json=payload, headers=headers)
+            response.raise_for_status()
+            data = response.json()
+        else:  # fallback without requests
+            req = urlrequest.Request(url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
+            try:
+                with urlrequest.urlopen(req) as resp:
+                    data = json.load(resp)
+            except HTTPError as exc:  # pragma: no cover - network errors
+                raise RuntimeError(f"HTTP error {exc.code}") from exc
+
         return data["choices"][0]["message"]["content"]
 
     def _call_local(self, prompt: str, **kwargs: Any) -> str:

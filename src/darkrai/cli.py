@@ -11,7 +11,13 @@ from .mistral_client import MistralClient
 
 
 def _cmd_generate(args: argparse.Namespace) -> None:
-    client = MistralClient(checkpoint="../../../models/mistral-7b")
+    """Handle the ``generate`` subcommand."""
+
+    client = MistralClient(
+        api_key=args.api_key,
+        model=args.model,
+        checkpoint=args.checkpoint,
+    )
     world = client.generate_world(args.prompt)
     if args.output:
         with open(args.output, "w", encoding="utf-8") as f:

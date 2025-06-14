@@ -11,15 +11,16 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        p2nix = poetry2nix.legacyPackages.${system};
+        p2nix = poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
         poetryEnv = p2nix.mkPoetryEnv {
           projectDir = self;
           python = pkgs.python311;
+          preferWheels = true;
         };
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = [ poetryEnv ];
+          buildInputs = [ poetryEnv pkgs.maturin ];
 
           shellHook = ''
             echo "🐍 Python JDR-IA environment ready via poetry2nix!"

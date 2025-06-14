@@ -1,23 +1,25 @@
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
-
-[project]
+[tool.poetry]
 name = "darkrai"
 version = "0.1.0"
 description = "Command line tool for generating fantasy worlds with Mistral"
-requires-python = ">=3.9"
-authors = [{name = "Darkrai Dev", email = "dev@example.com"}]
+authors = ["Darkrai Dev <dev@example.com>"]
 readme = "README.md"
-dependencies = [
-    "requests",
-    "transformers>=4.0.0",
-    "huggingface-hub>=0.17.0",
-    "python-dotenv"
-]
+packages = [{ include = "darkrai", from = "src" }]
 
-[project.scripts]
+[tool.poetry.dependencies]
+python = ">=3.9"
+requests = "^2.0"
+transformers = "^4.0.0"
+huggingface-hub = "^0.17.0"
+python-dotenv = "^1.0"
+numpy = "^1.0"
+
+[tool.poetry.scripts]
 darkrai = "darkrai.cli:main"
 
-[project.optional-dependencies]
-dev = ["pytest"]
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

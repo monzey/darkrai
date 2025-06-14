@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "darkrai"
+version = "0.1.0"
+description = "Command line tool for generating fantasy worlds with Mistral"
+requires-python = ">=3.9"
+authors = [{name = "Darkrai Dev", email = "dev@example.com"}]
+readme = "README.md"
+dependencies = [
+    "requests",
+    "transformers>=4.0.0",
+    "huggingface-hub>=0.17.0",
+    "python-dotenv"
+]
+
+[project.scripts]
+darkrai = "darkrai.cli:main"

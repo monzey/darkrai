@@ -32,7 +32,7 @@ The format may evolve during development.
 
 ## Setup
 
-The repository currently contains only this documentation, but it is intended to be a Python package. To prepare a development environment:
+The project is packaged using a standard `pyproject.toml`. To prepare a development environment:
 
 1. Ensure Python 3.11 or higher is installed.
 2. Create and activate a virtual environment:
@@ -42,16 +42,16 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-3. Install dependencies once they are defined in `requirements.txt`:
+3. Install the project in editable mode with its dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip install -e .
 ```
 
 4. *(Optional)* Download the Mistral 7B model checkpoint for local generation:
 
 ```bash
-python scripts/download_model.py
+darkrai download --destination models/mistral-7b
 ```
 
 ### Dependencies
@@ -63,6 +63,14 @@ Planned dependencies include:
 - `huggingface-hub` for downloading checkpoints from Hugging Face.
 
 A complete list will be added as implementation progresses.
+
+
+### Environment Variables
+
+Darkrai reads configuration from a local `.env` file if present. Useful variables include:
+
+- `MISTRAL_API_KEY` – API key for the hosted Mistral service
+- `HF_TOKEN` – token for downloading model checkpoints from Hugging Face
 
 
 ## Usage
@@ -95,10 +103,10 @@ The model is expected to return a JSON string which will be parsed into a Python
 
 ## Running the Generator
 
-You can now generate a world using `scripts/generate_world.py`:
+You can now generate a world using the `darkrai` command:
 
 ```bash
-python scripts/generate_world.py "<prompt>" --output world.json
+darkrai generate "<prompt>" --output world.json
 ```
 
 This will request world data from the Mistral LLM, then save the JSON output to `world.json`.

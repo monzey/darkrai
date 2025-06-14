@@ -4,29 +4,25 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    poetry2nix.url = "github:nix-community/poetry2nix";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = { self, nixpkgs, flake-utils, poetry2nix }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        pythonEnv = pkgs.python311.withPackages (ps: with ps; [
-          fastapi
-          uvicorn
-          openai
-          langchain
-          requests
-        ]);
+        p2nix = poetry2nix.legacyPackages.${system};
+        poetryEnv = p2nix.mkPoetryEnv {
+          projectDir = self;
+          python = pkgs.python311;
+        };
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = [ pythonEnv pkgs.poetry ];
+          buildInputs = [ poetryEnv ];
 
           shellHook = ''
-            echo "🐍 Python JDR-IA environment ready!"
-            export PYTHONPATH=$(pwd)
-            python -m venv .venv
-            source .venv/bin/activate
+            echo "🐍 Python JDR-IA environment ready via poetry2nix!"
           '';
         };
       }

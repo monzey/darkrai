@@ -62,30 +62,16 @@ pip install -e .
 darkrai download --destination models/mistral-7b
 ```
 
-### Using Docker
-
-This repository also provides a `Dockerfile` for those who prefer using a
-containerized environment.
-
-```bash
-# Build the image
-docker build -t darkrai .
-
-# Start an interactive shell in the container
-docker run -it darkrai
-```
-
-Within the container you can run `darkrai` or execute the unit tests.
-
 ### Using Docker Compose
 
-A `docker-compose.yml` is also provided for convenience. It builds the image
-while ignoring the optional `models` directory so that large checkpoints are not
-copied into the container.
+The `docker-compose.yml` uses the `python:3.11-slim` image and mounts your
+working directory. The optional `models` directory is mounted as a volume so
+checkpoints are available without being copied into the container. Dependencies
+are installed automatically when the container starts.
 
 ```bash
-# Build the image and start an interactive shell
-docker compose run --build darkrai
+# Start an interactive shell
+docker compose run darkrai
 ```
 
 ### Dependencies

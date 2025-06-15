@@ -4,17 +4,9 @@ from typing import Any, Dict, Optional
 
 from urllib import request as urlrequest
 from urllib.error import HTTPError
+import requests
 
-try:
-    import requests
-except Exception:  # pragma: no cover - requests is optional
-    requests = None
-
-try:
-    from transformers import AutoTokenizer, AutoModelForCausalLM
-except ImportError:  # pragma: no cover - transformers is optional
-    AutoTokenizer = None
-    AutoModelForCausalLM = None
+from transformers import AutoTokenizer, AutoModelForCausalLM,LlamaTokenizerFast,LlamaTokenizer
 
 
 class MistralClient:
@@ -29,7 +21,7 @@ class MistralClient:
         if checkpoint:
             if AutoTokenizer is None or AutoModelForCausalLM is None:
                 raise ImportError("transformers is required for using local checkpoints")
-            self.tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+            self.tokenizer = AutoTokenizer.from_pretrained(checkpoint, use_fast=True)
             self.local_model = AutoModelForCausalLM.from_pretrained(checkpoint)
         else:
             if not self.api_key:

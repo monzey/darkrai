@@ -3,5 +3,5 @@ services:
     build: .
     working_dir: /app
     volumes:
-      - ./models:/app/models
+      - .:/app
     command: bash

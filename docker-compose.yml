@@ -1,9 +1,13 @@
 version: '3.9'
 services:
   darkrai:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: python:3.11-slim
+    working_dir: /app
     volumes:
       - .:/app
-    command: bash
+      - ./models:/app/models
+    command: >-
+      bash -c "pip install --no-cache-dir --upgrade pip && \
+      pip install --no-cache-dir poetry && \
+      poetry config virtualenvs.create false && \
+      poetry install --no-interaction --no-ansi && bash"

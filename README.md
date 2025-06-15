@@ -77,6 +77,17 @@ docker run -it darkrai
 
 Within the container you can run `darkrai` or execute the unit tests.
 
+### Using Docker Compose
+
+A `docker-compose.yml` is also provided for convenience. It builds the image
+while ignoring the optional `models` directory so that large checkpoints are not
+copied into the container.
+
+```bash
+# Build the image and start an interactive shell
+docker compose run --build darkrai
+```
+
 ### Dependencies
 
 Planned dependencies include:

@@ -42,19 +42,24 @@ The project is packaged using a standard `pyproject.toml`.
 ### Manual setup (without Nix)
 
 1. Ensure Python 3.11 or higher is installed.
-2. Create and activate a virtual environment:
+2. Install [Poetry](https://python-poetry.org/) if you don't already have it:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+pip install --user poetry
 ```
 
-3. Install the project in editable mode with its dependencies:
+3. Install the dependencies (Poetry will create a `.venv` automatically):
 
 ```bash
-pip install -e .
+poetry install
 ```
-4. Copy `.env.example` to `.env` and add your tokens.
+
+4. Activate the environment and copy `.env.example` to `.env`:
+
+```bash
+poetry shell
+cp .env.example .env
+```
 
 5. *(Optional)* Download the Mistral 7B model checkpoint for local generation:
 

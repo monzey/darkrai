@@ -26,6 +26,10 @@ def _cmd_generate(args: argparse.Namespace) -> None:
         json.dump(world, sys.stdout, indent=2)
         sys.stdout.write("\n")
 
+    if args.index:
+        from .index import store_world_in_index
+        store_world_in_index(world, args.index)
+
 
 def _cmd_download(args: argparse.Namespace) -> None:
     from huggingface_hub import snapshot_download, login
@@ -55,6 +59,7 @@ def main(argv: list[str] | None = None) -> None:
     gen.add_argument("--api-key", help="Mistral API key")
     gen.add_argument("--model", default="mistral-7b", help="Model name")
     gen.add_argument("--checkpoint", help="Path to local checkpoint")
+    gen.add_argument("--index", help="Directory to store a LlamaIndex vector store")
     gen.set_defaults(func=_cmd_generate)
 
     dl = subparsers.add_parser("download", help="Download model from Hugging Face")

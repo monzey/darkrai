@@ -131,6 +131,13 @@ darkrai generate "<prompt>" --output world.json
 
 This will request world data from the Mistral LLM, then save the JSON output to `world.json`.
 
+If you want to persist the generated world in a vector store managed by
+LlamaIndex, provide an additional directory with `--index`:
+
+```bash
+darkrai generate "<prompt>" --output world.json --index index_dir
+```
+
 ---
 
 This project is in its early stages, and contributions are welcome as we work toward a fully functional generator.

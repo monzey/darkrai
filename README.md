@@ -34,12 +34,7 @@ The format may evolve during development.
 
 The project is packaged using a standard `pyproject.toml`.
 
-### Using Nix and poetry2nix
-
-1. Install [Nix](https://nixos.org/).
-2. Run `nix develop` to enter a shell with all dependencies provided by `poetry2nix`.
-
-### Manual setup (without Nix)
+### Manual setup
 
 1. Ensure Python 3.11 or higher is installed.
 2. Install [Poetry](https://python-poetry.org/) if you don't already have it:

@@ -61,7 +61,6 @@ class MistralClient:
             stop=["###"],
             temperature=0.7,
             top_p=0.95,
-            repetition_penalty=1.2
             **kwargs
         )
         return result["choices"][0]["text"]
